@@ -16,7 +16,7 @@ pipeline {
         stage ('Build the docker image') {
             steps {
                 script {
-                   dir('CICDProject/pythonproject'){
+                   dir('pythonproject'){
                     sh "docker build -t ${IMAGE_NAME}:latest ."
                 }
             }
