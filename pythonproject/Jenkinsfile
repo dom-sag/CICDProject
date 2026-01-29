@@ -16,12 +16,12 @@ pipeline {
         stage ('Build the docker image') {
             steps {
                 script {
-                   dir('pythonproject'){
+                   
                     sh "docker build -t ${IMAGE_NAME}:latest ."
                 }
             }
         }
-     }
+     
         stage('Run Container') {
             steps {
                 script {
