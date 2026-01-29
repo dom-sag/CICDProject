@@ -1,18 +1,14 @@
-# Use a base image
-FROM alpine:3.19
+FROM python:3.12-alpine
 
-# Install dependencies
-RUN apk add --no-cache python3 py3-pip
-
-# Copy app code into the container
-COPY app.py /app/app.py
-
-# Set working directory
 WORKDIR /app
 
-# Expose port
+# Copy app code
+COPY app.py .
+
+# Install Flask
+RUN pip install --no-cache-dir flask
+
 EXPOSE 5000
 
-# Run the app
-CMD ["python3", "app.py"]
+CMD ["python", "app.py"]
 

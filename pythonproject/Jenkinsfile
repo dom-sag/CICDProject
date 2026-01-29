@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "pythonapp"
+        CONTAINER_NAME = "pythonapp"
+    }
+
+    stages {
+        stage ('Git checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/dom-sag/CICDProject.git'
+            }
+        }
+
+        stage ('Build the docker image') {
+            steps {
+                script {
+                    sh "docker build -t ${IMAGE_NAME}:latest ."
+                }
+            }
+        }
+        stage('Run Container') {
+            steps {
+                script {
+                    sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${IMAGE_NAME}:latest"
+                }
+            }
+        }
+
+        }
+    }
