@@ -9,17 +9,19 @@ pipeline {
     stages {
         stage ('Git checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/dom-sag/CICDProject/pythonproject.git'
+                git branch: 'main', url: 'https://github.com/dom-sag/CICDProject.git'
             }
         }
 
         stage ('Build the docker image') {
             steps {
                 script {
+                   dir('CICDProject/pythonproject'){
                     sh "docker build -t ${IMAGE_NAME}:latest ."
                 }
             }
         }
+     }
         stage('Run Container') {
             steps {
                 script {
