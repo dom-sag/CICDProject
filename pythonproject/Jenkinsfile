@@ -20,8 +20,8 @@ pipeline {
             
                 // Use the SonarQube server configured in Jenkins
                   withSonarQubeEnv('SonarQube-Local') { 
-                  '''
-                  sh 
+                  
+                  sh '''
                       sonar-scanner \
                       -Dsonar.projectKey=sonar-project \
                       -Dsonar.sources=.
