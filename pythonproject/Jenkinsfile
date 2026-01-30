@@ -17,16 +17,15 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-              script {
-                  def scannerHome = tool 'SonarScanner'
-                  sh 'which sonar-scanner || true'
-                  sh "echo Scanner used: ${scannerHome}"
+            
                 // Use the SonarQube server configured in Jenkins
-                  withSonarQubeEnv('SonarQube-Local') {
-                  sh "${scannerHome}/bin/sonar-scanner \
+                  withSonarQubeEnv('SonarQube-Local') { 
+                  '''
+                  sh 
+                      sonar-scanner \
                       -Dsonar.projectKey=sonar-project \
-                      -Dsonar.sources=."
-                    
+                      -Dsonar.sources=.
+                    '''
 		}	
 	    }			
 	}
