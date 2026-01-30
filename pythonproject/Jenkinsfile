@@ -19,11 +19,11 @@ pipeline {
             steps {
               script {
                   def scannerHome = tool 'SonarScanner'
+                  sh 'which sonar-scanner || true'
+                  sh "echo Scanner used: ${scannerHome}"
                 // Use the SonarQube server configured in Jenkins
                   withSonarQubeEnv('SonarQube-Local') {
-                 
-		
-                    sh "${scannerHome}/bin/sonar-scanner \
+                  sh "${scannerHome}/bin/sonar-scanner \
                       -Dsonar.projectKey=sonar-project \
                       -Dsonar.sources=."
                     
