@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "pythonapp"
         CONTAINER_NAME = "pythonapp"
-	SONAR_HOST_URL = "http://localhost:9000"   
+//	SONAR_HOST_URL = "http://localhost:9000"   
 
  }
 
@@ -24,9 +24,7 @@ pipeline {
                     sh '''
                     sonar-scanner \
                       -Dsonar.projectKey=sonar-project \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=$SONAR_HOST_URL \
-                      -Dsonar.login=$SONAR_TOKEN
+                      -Dsonar.sources=.
                     '''
 		}	
 		}			
