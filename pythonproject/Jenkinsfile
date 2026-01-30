@@ -15,13 +15,12 @@ pipeline {
             }
         }
 
-        stage('SonarQube Scan') {
+        stage('SonarQube Analysis') {
             steps {
-                withCredentials([string(
-                    credentialsId: 'sonar-token',
-                    variable: 'SONAR_TOKEN'
-                )]) 
-		{
+                // Use the SonarQube server configured in Jenkins
+                withSonarQubeEnv('SonarQube-Local') {
+                 
+		
                     sh '''
                     sonar-scanner \
                       -Dsonar.projectKey=sonar-project \
