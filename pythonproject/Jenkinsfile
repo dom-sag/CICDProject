@@ -19,7 +19,7 @@ pipeline {
             steps {
                 withCredentials([string(
                     credentialsId: 'sonar-token',
-                    variable: 'jenkins-token'
+                    variable: 'SONAR_TOKEN'
                 )]) 
 		{
                     sh '''
@@ -27,7 +27,7 @@ pipeline {
                       -Dsonar.projectKey=sonar-project \
                       -Dsonar.sources=. \
                       -Dsonar.host.url=$SONAR_HOST_URL \
-                      -Dsonar.login=$sonar-token
+                      -Dsonar.login=$SONAR_TOKEN
                     '''
 		}	
 		}			
