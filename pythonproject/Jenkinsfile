@@ -4,7 +4,9 @@ pipeline {
     environment {
         IMAGE_NAME = "pythonapp"
         CONTAINER_NAME = "pythonapp"
-    }
+	SONAR_HOST_URL = "http://localhost:9000"   
+
+ }
 
     stages {
         stage ('Git checkout') {
@@ -13,7 +15,33 @@ pipeline {
             }
         }
 
-        stage ('Build the docker image') {
+        stage('SonarQube Scan') {
+            steps {
+                withCredentials([string(
+                    credentialsId: 'sonar-token',
+                    variable: 'jenkins-token'
+                )]) 
+		{
+                    sh '''
+                    sonar-scanner \
+                      -Dsonar.projectKey=sonar project \
+                      -Dsonar.sources=. \
+                      -Dsonar.host.url=$SONAR_HOST_URL \
+                      -Dsonar.login=$jenkins-token
+                    '''
+		}	
+		}			
+	}
+
+	stage('Quality Gate') {
+            	steps {
+                	timeout(time: 5, unit: 'MINUTES') {
+                    	waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+	stage ('Build the docker image') {
             steps {
                   dir('pythonproject') {
                   sh 'pwd'
